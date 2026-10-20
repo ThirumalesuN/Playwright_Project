@@ -1,3 +1,4 @@
+
 pipeline {
     agent any
 
@@ -8,15 +9,21 @@ pipeline {
             }
         }
 
+        stage('Create Virtual Environment') {
+            steps {
+                bat '"C:\\Users\\THIRU\\AppData\\Local\\Programs\\Python\\Python312\\python.exe" -m venv .venv'
+            }
+        }
+
         stage('Install Dependencies') {
             steps {
-                bat 'python -m pip install -r Tests/requirements.txt'
+                bat '.venv\\Scripts\\python.exe -m pip install -r Tests\\requirements.txt'
             }
         }
 
         stage('Run Tests') {
             steps {
-                bat 'python -m pytest -v'
+                bat '.venv\\Scripts\\python.exe -m pytest -v'
             }
         }
     }
